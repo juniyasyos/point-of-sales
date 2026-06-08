@@ -1,0 +1,17 @@
+FROM --platform=linux/amd64 ubuntu:22.04
+
+RUN dpkg --add-architecture i386 && \
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        curl gnupg software-properties-common && \
+    mkdir -pm755 /etc/apt/keyrings && \
+    curl -fsSL https://dl.winehq.org/wine-builds/winehq.key | gpg --dearmor -o /etc/apt/keyrings/winehq.gpg && \
+    sh -c 'echo "deb [signed-by=/etc/apt/keyrings/winehq.gpg] https://dl.winehq.org/wine-builds/ubuntu/ jammy main" > /etc/apt/sources.list.d/winehq.list' && \
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y winehq-stable nodejs npm && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV WINEARCH=win64
+ENV WINEDEBUG=fixme-all
+
+WORKDIR /app
