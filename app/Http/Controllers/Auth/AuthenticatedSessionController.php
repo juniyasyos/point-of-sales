@@ -57,7 +57,7 @@ class AuthenticatedSessionController extends Controller
         );
 
         if ($user && method_exists($user, 'hasVerifiedEmail') && ! $user->hasVerifiedEmail()) {
-            return redirect()->route('verification.notice');
+            // verifikasi email dinonaktifkan — langsung redirect
         }
 
         $routePriority = [

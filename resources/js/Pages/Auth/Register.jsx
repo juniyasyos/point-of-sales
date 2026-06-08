@@ -17,6 +17,7 @@ export default function Register({ botGuard }) {
     const tokenField = botGuard?.token_field || "bot_guard_token";
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
+        username: "",
         email: "",
         password: "",
         password_confirmation: "",
@@ -143,10 +144,40 @@ export default function Register({ botGuard }) {
                                 )}
                             </div>
 
-                            {/* Email */}
+                            {/* Username */}
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                    Email
+                                    Username
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                                        <IconUser size={20} />
+                                    </div>
+                                    <input
+                                        type="text"
+                                        value={data.username}
+                                        onChange={(e) =>
+                                            setData("username", e.target.value)
+                                        }
+                                        placeholder="Username unik"
+                                        className={`w-full h-12 pl-12 pr-4 rounded-xl border-2 ${
+                                            errors.username
+                                                ? "border-danger-500 focus:border-danger-500"
+                                                : "border-slate-200 dark:border-slate-700 focus:border-primary-500"
+                                        } bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-4 focus:ring-primary-500/20 transition-all`}
+                                    />
+                                </div>
+                                {errors.username && (
+                                    <p className="mt-1.5 text-sm text-danger-500">
+                                        {errors.username}
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Email (opsional) */}
+                            <div>
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                                    Email <span className="text-slate-400 font-normal">(opsional)</span>
                                 </label>
                                 <div className="relative">
                                     <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">

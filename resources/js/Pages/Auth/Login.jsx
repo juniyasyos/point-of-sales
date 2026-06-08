@@ -3,7 +3,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 import AuthBotGuardFields from "@/Components/AuthBotGuardFields";
 import {
     IconShoppingCart,
-    IconMail,
+    IconUser,
     IconLock,
     IconEye,
     IconEyeOff,
@@ -15,7 +15,7 @@ export default function Login({ status, canResetPassword, canRegister, botGuard 
     const honeypotField = botGuard?.honeypot_field || "company_website";
     const tokenField = botGuard?.token_field || "bot_guard_token";
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: "",
+        username: "",
         password: "",
         remember: false,
         [honeypotField]: "",
@@ -83,32 +83,32 @@ export default function Login({ status, canResetPassword, canRegister, botGuard 
                                     {errors.human}
                                 </div>
                             )}
-                            {/* Email */}
+                            {/* Username */}
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                                    Email
+                                    Username
                                 </label>
                                 <div className="relative">
                                     <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                                        <IconMail size={20} />
+                                        <IconUser size={20} />
                                     </div>
                                     <input
-                                        type="email"
-                                        value={data.email}
+                                        type="text"
+                                        value={data.username}
                                         onChange={(e) =>
-                                            setData("email", e.target.value)
+                                            setData("username", e.target.value)
                                         }
-                                        placeholder="nama@email.com"
+                                        placeholder="Masukkan username"
                                         className={`w-full h-12 pl-12 pr-4 rounded-xl border-2 ${
-                                            errors.email
+                                            errors.username
                                                 ? "border-danger-500 focus:border-danger-500"
                                                 : "border-slate-200 dark:border-slate-700 focus:border-primary-500"
                                         } bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:ring-4 focus:ring-primary-500/20 transition-all`}
                                     />
                                 </div>
-                                {errors.email && (
+                                {errors.username && (
                                     <p className="mt-1.5 text-sm text-danger-500">
-                                        {errors.email}
+                                        {errors.username}
                                     </p>
                                 )}
                             </div>

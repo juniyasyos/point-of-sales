@@ -25,7 +25,7 @@ class UserController extends Controller
         $users = User::query()
             ->with('roles')
             ->when(request()->search, fn ($query) => $query->where('name', 'like', '%'.request()->search.'%'))
-            ->select('id', 'name', 'avatar', 'email')
+            ->select('id', 'name', 'username', 'avatar', 'email')
             ->latest()
             ->paginate(7)
             ->withQueryString();
@@ -67,6 +67,7 @@ class UserController extends Controller
         // create new user data
         $user = User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'avatar' => $avatarPath,
@@ -142,6 +143,7 @@ class UserController extends Controller
         // update user data name
         $user->update([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'avatar' => $avatarPath,
         ]);
@@ -204,6 +206,7 @@ class UserController extends Controller
     {
         return [
             'name' => $user->name,
+            'username' => $user->username,
             'email' => $user->email,
             'avatar_changed' => $avatarChanged,
             'roles' => array_values($roles),
