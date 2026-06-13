@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import {
     IconShoppingCart,
     IconReceipt,
@@ -14,6 +14,7 @@ import {
 } from "@tabler/icons-react";
 
 export default function Welcome() {
+    const { auth } = usePage().props;
     const features = [
         {
             icon: IconShoppingCart,
@@ -97,18 +98,38 @@ export default function Welcome() {
                         </div>
 
                         <div className="flex items-center gap-3">
-                            <Link
-                                href="/login"
-                                className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 transition-colors"
-                            >
-                                Masuk
-                            </Link>
-                            <Link
-                                href="/register"
-                                className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25 transition-all"
-                            >
-                                Daftar Gratis
-                            </Link>
+                            {auth.user ? (
+                                auth.super ? (
+                                    <Link
+                                        href="/dashboard"
+                                        className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25 transition-all"
+                                    >
+                                        Dashboard
+                                    </Link>
+                                ) : (
+                                    <Link
+                                        href="/dashboard/transactions"
+                                        className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25 transition-all"
+                                    >
+                                        Kasir
+                                    </Link>
+                                )
+                            ) : (
+                                <>
+                                    <Link
+                                        href="/login"
+                                        className="px-5 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary-500 transition-colors"
+                                    >
+                                        Masuk
+                                    </Link>
+                                    <Link
+                                        href="/register"
+                                        className="px-5 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-primary-500 to-primary-600 rounded-xl hover:from-primary-600 hover:to-primary-700 shadow-lg shadow-primary-500/25 transition-all"
+                                    >
+                                        Daftar Gratis
+                                    </Link>
+                                </>
+                            )}
                         </div>
                     </div>
                 </nav>
